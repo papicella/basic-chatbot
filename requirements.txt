@@ -1,0 +1,18 @@
+# requirements.txt
+
+# Web Framework for creating the REST API
+Flask
+
+# Hugging Face Transformers library for the LLM and tokenizer
+transformers
+
+# PyTorch (Torch) is the deep learning backend required by the model
+# You should choose the appropriate torch version for your system (CPU or CUDA)
+# The line below is a generic requirement, often resolved to the CPU version.
+# If you have a CUDA-enabled GPU, you might need a specific install command 
+# for PyTorch (e.g., from the PyTorch website) instead of just this line.
+torch
+
+# Other dependencies that are often useful but might be automatically installed:
+# sentencepiece (Sometimes used by tokenizers)
+# numpy (Dependency for many scientific packages, including torch and transformers)
