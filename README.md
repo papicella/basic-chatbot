@@ -23,25 +23,23 @@ $ uv pip install -r requirements.txt
  * Serving Flask app 'main'
  * Debug mode: on
 WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
- * Running on http://127.0.0.1:5000
-Press CTRL+C to quit
- * Restarting with stat
-🤖 Loading Model: distilgpt2...
-✅ Model loaded successfully.
- * Debugger is active!
- * Debugger PIN: 841-512-339
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.20.33:5001
 ```
 
 ## Test
 
 ```
-╰─$ curl -X POST http://127.0.0.1:5000/chat -H "Content-Type: application/json" -d '{"prompt": "What is the capital of France?"}'
+╰─$ curl -X POST http://127.0.0.1:5001/chat -H "Content-Type: application/json" -d '{"prompt": "What is the capital of France?"}'
 {
   "message": "\u201d\n\nThe French government has come under fire for its attempt to use a country\u2019s currency to cover the cost of living and to create an alternative currency.\nFrance is an EU member and, as of now, France is a member. France has been in the Eurozone since 1949. The euro is currently pegged at about \u20ac15.1 billion. But there has also been anger at what some say is inadequate support for the new currency in"
 }
 ```
 
 ## Readteam the chatbot API using Snyk CLI
+
+Note: You will need to use ngrok or bore to expose localhost to the internet and then use that in the redteam.yaml
 
 ```
 $ snyk redteam --experimental
