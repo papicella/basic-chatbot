@@ -8,7 +8,7 @@ import os
 
 # --- Configuration ---
 # DistilGPT2 is a small, distilled version of GPT-2, suitable for quick local inference.
-MODEL_NAME = "distilgpt2" 
+MODEL_NAME = "distilgpt2"
 
 # Initialize Flask App
 app = Flask(__name__)
@@ -37,17 +37,17 @@ except Exception as e:
 def generate_chatbot_response(prompt: str) -> str:
     """
     Generates a response from the LLM based on the user's prompt.
-    (This function remains unchanged.)
+    FIXED: Uses 'max_new_tokens' instead of 'max_length' to prevent errors with long prompts.
     """
     try:
         # 1. Encode the input prompt
         input_ids = tokenizer.encode(prompt, return_tensors='pt')
-        
+
         # 2. Generate response tokens
         with torch.no_grad():
             output = model.generate(
                 input_ids,
-                max_length=100,  # Max length of the total generated sequence
+                max_new_tokens=100,  # Max length of the NEWLY generated text (100 tokens)
                 num_return_sequences=1,
                 no_repeat_ngram_size=2, # Avoid repeating phrases
                 temperature=0.7,
@@ -58,14 +58,14 @@ def generate_chatbot_response(prompt: str) -> str:
 
         # 3. Decode the generated tokens back to text
         response_text = tokenizer.decode(
-            output[0], 
+            output[0],
             skip_special_tokens=True
         )
-        
+
         # Simple cleanup to remove the original prompt from the start of the response
         if response_text.startswith(prompt):
             return response_text[len(prompt):].strip()
-            
+
         return response_text.strip()
 
     except Exception as e:
@@ -78,7 +78,7 @@ def generate_chatbot_response(prompt: str) -> str:
 def chat():
     """
     REST endpoint to receive a prompt and return a chatbot response.
-    
+
     If using POST: Expects a JSON body: {"prompt": "user message here"}
     If using GET: Expects a URL query parameter: ?prompt=user%20message%20here
     Returns a JSON body: {"message": "chatbot response here"}
@@ -90,24 +90,24 @@ def chat():
         if not request.json or 'prompt' not in request.json:
             return jsonify({"error": "Missing 'prompt' in JSON request body for POST."}), 400
         user_prompt = request.json.get('prompt')
-    
+
     elif request.method == 'GET':
         # Retrieve prompt from URL query parameters for GET requests
         user_prompt = request.args.get('prompt')
-        
+
         if not user_prompt:
             return jsonify({"error": "Missing 'prompt' query parameter for GET."}), 400
 
     if not user_prompt or not isinstance(user_prompt, str):
-         return jsonify({"error": "Invalid or empty 'prompt' value."}), 400
+           return jsonify({"error": "Invalid or empty 'prompt' value."}), 400
 
     print(f"▶️ Received prompt ({request.method}): {user_prompt}")
-    
+
     # Get the response from the LLM
     bot_message = generate_chatbot_response(user_prompt)
-    
+
     print(f"◀️ Sending response: {bot_message}")
-    
+
     # Return the response as JSON
     return jsonify({"message": bot_message})
 
