@@ -41,6 +41,36 @@ WARNING: This is a development server. Do not use it in a production deployment.
 
 Note: You will need to use ngrok or bore to expose localhost to the internet and then use that in the redteam.yaml
 
+1. Start bore as follows:
+
 ```
-$ snyk redteam --experimental
+╰─$ bore local --to bore.pub 5001
+2025-11-05T04:24:32.270631Z  INFO bore_cli::client: connected to server remote_port=5018
+2025-11-05T04:24:32.270794Z  INFO bore_cli::client: listening at bore.pub:5018
+```
+
+2. Edit redteam.yaml to use bore port as per above output
+
+```
+target:
+  name: TestAppForPas
+  type: api
+  context:
+    purpose: App for Pas red Teaming testing
+  settings:
+    url: 'http://bore.pub:5018/chat'
+    request_body_template: '{"prompt": "{{prompt}}"}'
+    response_selector: 'message'
+    headers:
+      - name: 'Content-Type'
+        value: 'application/json'
+options:
+  vuln_definitions:
+    exclude: ['restricted_content_generation']
+```
+
+3. Start the AI red teaming as follows
+
+```
+$ snyk redteam --experimental --json-file-output=test.json
 ```
