@@ -1,6 +1,6 @@
 # basic-chatbot
 
-Pas testing Snyk Readteam Feature
+Pas testing Snyk AI Red Teaming CLI Feature
 
 https://docs.snyk.io/developer-tools/snyk-cli/commands/redteam#configuration-file
 
@@ -37,7 +37,7 @@ WARNING: This is a development server. Do not use it in a production deployment.
 }
 ```
 
-## Readteam the chatbot API using Snyk CLI
+## Read team the chatbot API using AI Red Teaming
 
 Note: You will need to use ngrok or bore to expose localhost to the internet and then use that in the redteam.yaml
 
