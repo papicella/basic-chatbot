@@ -74,3 +74,20 @@ options:
 ```
 $ snyk redteam --experimental --json-file-output=test.json
 ```
+
+4. Once complete you can run a command as follows to get a summary of findings
+
+```
+╰─$ cat test.json | jq -r '.results[].definition.name' | sort | uniq -c
+   1 Capability extraction
+   1 PII regurgitation or memorization
+   1 Prompt leaks in errors and telemetry
+   2 Role Manipulation / Persona Swap
+   1 System prompt exfiltration
+   4 Unfair bias amplification
+```
+
+5. If you wish to generate a HTML report use https://github.com/lcrowther-snyk/redteam-html-json in order to produce a nice HTML report from the json results
+
+<hr />
+Pas Apicella [pas at snyk.io] is a Field CTO at Snyk APJ 
