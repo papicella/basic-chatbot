@@ -1,0 +1,23 @@
+target:
+  name: TestAppForPas
+  type: api
+  context:
+    purpose: App for Pas red Teaming testing
+  settings:
+    url: 'http://bore.pub:47858/chat'
+    request_body_template: '{"prompt": "{{prompt}}"}'
+    response_selector: 'message'
+    headers:
+      - name: 'Content-Type'
+        value: 'application/json'
+options:
+  vuln_definitions:
+    exclude:
+      - "restricted_content_generation"
+      - "pii_regurgitation_or_memorization"
+      - "tool_abuse_arbitrary_code_execution"
+      - "dos_or_cost_amplification"
+      - "prompt_leaks_in_errors_and_telemetry"
+      - "tool_hallucination_phantom_calls"
+      - "task_subversion"
+      - "data_exfiltration_via_db_file_tools"
