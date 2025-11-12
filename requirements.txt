@@ -11,7 +11,7 @@ transformers
 # The line below is a generic requirement, often resolved to the CPU version.
 # If you have a CUDA-enabled GPU, you might need a specific install command 
 # for PyTorch (e.g., from the PyTorch website) instead of just this line.
-torch
+#torch
 
 # Other dependencies that are often useful but might be automatically installed:
 # sentencepiece (Sometimes used by tokenizers)
